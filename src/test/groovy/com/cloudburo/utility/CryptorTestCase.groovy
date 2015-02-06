@@ -8,7 +8,7 @@ import org.junit.Before;
 
 class CryptorTestCase {
 
-	@Test
+	//@Test
 	public void testDecrypt() {
 			Cryptor crypt = new Cryptor()
 			crypt.credentialsPath = "src/test/resources/"
