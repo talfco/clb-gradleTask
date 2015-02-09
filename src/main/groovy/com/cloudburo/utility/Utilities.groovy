@@ -8,6 +8,13 @@ class Utilities {
 	
 	static final Logger logger = Logger.getLogger(Utilities.class)
 
+	/**
+	 * Replace a text in a directory structure
+	 * @param fdir : The directory from where to recursively search
+	 * @param exts : A list of file extensions which must be considered in the search, e.g. .java, .yml
+	 * @param srcExp : The expression which you are looking for
+	 * @param replaceText : The text to be replaced
+	 */
 	public static void replaceTextInFiles(File fdir, def exts, String srcExp, String replaceText) {
 		fdir.eachFileRecurse({file ->
 			for (ext in exts){
@@ -24,9 +31,24 @@ class Utilities {
 		)
 	}
 	
+	/**
+	 * Executes a shell command in the user directory
+	 * @param command : The shell command
+	 * @return : The exit value of the shell command
+	 */
 	public static def executeOnShell(String command) {
 		return executeOnShell(command, new File(System.properties.'user.dir'))
-	  }
+	}
+	
+	/**
+	 *  Executes a shell command in the user directory 
+	 * @param command: The shell command
+	 * @param out: The output produced by the commant
+	 * @return:  The exit value of the shell command
+	 */
+	public static def executeOnShell(String command, StringBuffer out) {
+		return executeOnShell(command, new File(System.properties.'user.dir'),out)
+	}
 	
 	public static def executeOnShell(String command, File workingDir) {
 		logger.debug "Calling '${command}' on directory '${workingDir}'"
@@ -39,9 +61,7 @@ class Utilities {
 		return process.exitValue()
 	} 
 	
-	public static def executeOnShell(String command, StringBuffer out) {
-		return executeOnShell(command, new File(System.properties.'user.dir'),out)
-	  }
+
 	
 	public static def executeOnShell(String command, File workingDir, StringBuffer out) {
 		logger.debug "Calling '${command}' on directory '${workingDir}'"
