@@ -18,7 +18,9 @@ class Cryptor   {
 	
 	String  decrypt(String fileName)  {
 		StringBuffer out = new StringBuffer()
+		Utilities.SENSIBLEOUTPUT = true
 		def result = Utilities.executeOnShell("openssl des3 -d -K ${sslkey} -iv ${ssliv} -in ${fileName}",new File(credentialsPath),out) 
+		Utilities.SENSIBLEOUTPUT = false
 		if (result != 0)
 		  logger.warn("Decrypt of '${fileName}' failed")
 		return out.toString()
