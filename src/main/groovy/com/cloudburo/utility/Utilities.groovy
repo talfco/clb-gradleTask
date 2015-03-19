@@ -7,6 +7,7 @@ import org.apache.log4j.Logger
 class Utilities {
 	
 	static final Logger logger = Logger.getLogger(Utilities.class)
+	static boolean SENSIBLEOUTPUT = false
 
 	/**
 	 * Replace a text in a directory structure
@@ -21,7 +22,10 @@ class Utilities {
 				if (file.name.endsWith(ext)) {
 					def fileText = file.text;
 					if (fileText.contains(srcExp)) {
-						logger.debug("==> Replacing "+srcExp+" in "+file.path)
+						if (SENSIBLEOUTPUT) 
+						  logger.debug("==> Replacing text in "+file.path)
+						else
+						  logger.debug("==> Replacing "+srcExp+" in "+file.path)
 					    fileText = fileText.replaceAll(srcExp, replaceText)
 					    file.write(fileText);
 					}
@@ -64,7 +68,14 @@ class Utilities {
 
 	
 	public static def executeOnShell(String command, File workingDir, StringBuffer out) {
-		logger.debug "Calling '${command}' on directory '${workingDir}'"
+		if (SENSIBLEOUTPUT) {
+		  if (command.length()>6)
+		    logger.debug "Calling '${command.substring(0,5)} <truncated>' on directory '${workingDir}'"
+		  else
+		    logger.debug "Calling '${command}' on directory '${workingDir}'"
+		}
+		else
+		  logger.debug "Calling '${command}' on directory '${workingDir}'"
 		def process = new ProcessBuilder(addShellPrefix(command))
 										  .directory(workingDir)
 										  .redirectErrorStream(true)
