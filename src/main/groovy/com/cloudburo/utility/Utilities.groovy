@@ -1,6 +1,10 @@
 package com.cloudburo.utility
 
-import java.io.File;
+import java.io.File
+import org.joda.time.DateTime
+import org.joda.time.DateTimeZone
+
+
 
 import org.apache.log4j.Logger
 
@@ -95,6 +99,56 @@ class Utilities {
 		commandArray[0] = "sh"
 		commandArray[1] = "-c"
 		commandArray[2] = command
-		return commandArray
+		retpuurn commandArray
 	}
+	
+	public static int getCurrentHour(String tz) {
+		DateTimeZone zone = DateTimeZone.forID(tz);
+		DateTime dt = new DateTime(zone)
+		dt.getHourOfDay()
+	}
+	
+	public static boolean isCurrentHourInRange(String tz, int from, int to) {
+		int current = getCurrentHour(tz)
+		boolean inS = current > from && current < to
+	}
+	
+	public static boolean canProcessEntryInHour(String path, String processType, String key, int max) {
+		String fileName = "${path}/${processType}_${key}.txt";
+		boolean created = new File(fileName).createNewFile()
+		String txt = new File(fileName).text
+		int currentHour = getCurrentHour()
+		int count
+		
+		if (txt.contains(":")) {
+		  String[] token = txt.tokenize(':')
+		  if (token[0] == "${currentHour}") {
+			  count = Integer.parseInt(token[1])
+			  count++
+			  if (count > max) return false  
+		  } else {
+		    count = 1
+		  }
+		} else {
+		  count = 1
+		}
+		new File(fileName).write("${currentHour}:${count}")
+		return true
+	}
+	
+	public static boolean decreaseProcessEntryInHour(String path, String processType, String key) {
+		String fileName = "${path}/${processType}_${key}.txt";
+		boolean created = new File(fileName).createNewFile()
+		if (created) return
+		String txt = new File(fileName).text
+		int currentHour = getCurrentHour()
+		if (!txt.contains(":")) return
+	    String[] token = txt.tokenize(':')
+		if (token[0] != "${currentHour}") return
+		int count = Integer.parseInt(token[1])
+		count--
+		if (count < 0 ) count = 0
+		new File(fileName).write("${currentHour}:${count}")
+	}
+	
 }

@@ -11,7 +11,8 @@ dependencies {
 	compile gradleApi()
 	compile localGroovy()
 	compile 'org.codehaus.groovy.modules.http-builder:http-builder:0.7.2'
-	testCompile 'junit:junit:4.10'
+	compile 'joda-time:joda-time:2.7'
+	testCompile 'junit:junit:4.10' 
 }
 
 publishing {
@@ -19,7 +20,7 @@ publishing {
 		maven(MavenPublication) {
 			groupId "com.cloudburo"
 			artifactId 'clb-gradleTask'
-			version '1.0.1-SNAPSHOT'
+			version '1.0.2-SNAPSHOT'
 			from components.java
 		}
 	}
