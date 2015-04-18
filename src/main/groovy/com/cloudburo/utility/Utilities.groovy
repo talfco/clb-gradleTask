@@ -99,13 +99,19 @@ class Utilities {
 		commandArray[0] = "sh"
 		commandArray[1] = "-c"
 		commandArray[2] = command
-		retpuurn commandArray
+		return commandArray
 	}
 	
 	public static int getCurrentHour(String tz) {
 		DateTimeZone zone = DateTimeZone.forID(tz);
 		DateTime dt = new DateTime(zone)
-		dt.getHourOfDay()
+		return dt.getHourOfDay()
+	}
+	
+	public static int getCurrentDay(String tz) {
+		DateTimeZone zone = DateTimeZone.forID(tz);
+		DateTime dt = new DateTime(zone)
+		return dt.getDayOfWeek()
 	}
 	
 	public static boolean isCurrentHourInRange(String tz, int from, int to) {
