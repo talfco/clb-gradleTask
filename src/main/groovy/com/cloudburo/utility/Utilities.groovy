@@ -119,7 +119,7 @@ class Utilities {
 		boolean inS = current > from && current < to
 	}
 	
-	public static boolean canProcessEntryInHour(String path, String processType, String key, int max) {
+	public static int getProcessEntryInHour(String path, String processType, String key) {
 		String fileName = "${path}/${processType}_${key}.txt";
 		boolean created = new File(fileName).createNewFile()
 		String txt = new File(fileName).text
@@ -130,19 +130,37 @@ class Utilities {
 		  String[] token = txt.tokenize(':')
 		  if (token[0] == "${currentHour}") {
 			  count = Integer.parseInt(token[1])
-			  count++
-			  if (count > max) return false  
+			  return count
 		  } else {
-		    count = 1
+		    return 0
 		  }
 		} else {
-		  count = 1
+		    return 0
 		}
-		new File(fileName).write("${currentHour}:${count}")
-		return true
+
 	}
 	
-	public static boolean decreaseProcessEntryInHour(String path, String processType, String key) {
+	public static void updateProcessEntryInHour(String path, String processType, String key, int entries) {
+		String fileName = "${path}/${processType}_${key}.txt";
+		boolean created = new File(fileName).createNewFile()
+		String txt = new File(fileName).text
+		int currentHour = getCurrentHour()
+		int count
+		if (txt.contains(":")) {
+		  String[] token = txt.tokenize(':')
+		  if (token[0] == "${currentHour}") {
+			  count = Integer.parseInt(token[1])
+			  count = count + entries
+		  } else {
+			count = entries
+		  }
+		} else {
+		  count = entries
+		}
+		new File(fileName).write("${currentHour}:${count}")
+	}
+	
+	public static boolean decreaseProcessEntryInHour(String path, String processType, String key, int entries) {
 		String fileName = "${path}/${processType}_${key}.txt";
 		boolean created = new File(fileName).createNewFile()
 		if (created) return
@@ -152,7 +170,7 @@ class Utilities {
 	    String[] token = txt.tokenize(':')
 		if (token[0] != "${currentHour}") return
 		int count = Integer.parseInt(token[1])
-		count--
+		count = count - entries
 		if (count < 0 ) count = 0
 		new File(fileName).write("${currentHour}:${count}")
 	}

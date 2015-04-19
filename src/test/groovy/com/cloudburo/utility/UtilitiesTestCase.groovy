@@ -75,10 +75,12 @@ class UtilitiesTestCase {
 	public void testTimeHandling() {
 		int hour = Utilities.getCurrentHour("Europe/Zurich")
 		System.out.println("Actual hour ${hour}")
-		def inS = Utilities.isCurrentHourInRange("Europe/Zurich", 8,11)
-		System.out.println("Actual hour ${inS}")
-		boolean check = Utilities.canProcessEntryInHour("build", "newsq", "blogtest", 4)
-		System.out.println("Got ${check}")
+		def inS = Utilities.isCurrentHourInRange("Europe/Zurich", 8,18)
+		System.out.println("Actual hour ${inS}") 
+		Utilities.updateProcessEntryInHour("build", "newsq", "blogtest", 5)
+		int i = Utilities.getProcessEntryInHour("build", "newsq", "blogtest")
+		
+		System.out.println("Got ${i}")
 		//Utilities.decreaseProcessEntryInHour("build", "newsq", "blogtest")
 	}
 	
