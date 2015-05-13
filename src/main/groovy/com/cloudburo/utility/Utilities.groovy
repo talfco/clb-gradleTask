@@ -40,7 +40,7 @@ class Utilities {
 
 	}
 	
-	String generateMD5(String s) {
+	private static String generateMD5(String s) {
 		MessageDigest digest = MessageDigest.getInstance("MD5")
 		digest.update(s.bytes);
 		new BigInteger(1, digest.digest()).toString(16).padLeft(32, '0')
