@@ -1,10 +1,10 @@
 package com.cloudburo.utility
 
 import java.io.File
+import java.security.MessageDigest;
+
 import org.joda.time.DateTime
 import org.joda.time.DateTimeZone
-
-
 
 import org.apache.log4j.Logger
 
@@ -24,7 +24,7 @@ class Utilities {
 		fdir.eachFileRecurse({file ->
 			for (ext in exts){
 				if (file.name.endsWith(ext)) {
-					def fileText = file.text;
+					String fileText = file.text;
 					if (fileText.contains(srcExp)) {
 						if (SENSIBLEOUTPUT) 
 						  logger.debug("==> Replacing text in "+file.path)
@@ -37,7 +37,23 @@ class Utilities {
 			}
 		}
 		)
+
 	}
+	
+	String generateMD5(String s) {
+		MessageDigest digest = MessageDigest.getInstance("MD5")
+		digest.update(s.bytes);
+		new BigInteger(1, digest.digest()).toString(16).padLeft(32, '0')
+	 }
+	
+	public static boolean fileChanged(File fi, String newContent) {
+		if (generateMD5(fi.text).compareTo(generateMD5(newContent)) !=0) {
+			logger.info("File changed ${fi.name}")
+			fi.write(newContent,'UTF8')
+			return true
+		}
+		else return false
+	 }
 	
 	/**
 	 * Executes a shell command in the user directory
