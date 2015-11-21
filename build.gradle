@@ -24,6 +24,6 @@ publishing {
 		}
 	}
 	repositories {
-		maven { url "/Users/Felix/Development/workspace-grails/clb_mvnrepo_snapshots"}
+		maven { url "/Users/Felix/Development/workspace-grails/maven-github-snapshots"}
 	}
 }
