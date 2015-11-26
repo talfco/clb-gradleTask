@@ -6,13 +6,11 @@ import java.security.MessageDigest;
 import org.joda.time.DateTime
 import org.joda.time.DateTimeZone
 
-import org.apache.log4j.Logger
+import groovy.util.logging.Slf4j
 
+@Slf4j
 class Utilities {
-	
-	static final Logger logger = Logger.getLogger(Utilities.class)
 	static boolean SENSIBLEOUTPUT = false
-
 	/**
 	 * Replace a text in a directory structure
 	 * @param fdir : The directory from where to recursively search
@@ -27,9 +25,9 @@ class Utilities {
 					String fileText = file.text;
 					if (fileText.contains(srcExp)) {
 						if (SENSIBLEOUTPUT) 
-						  logger.debug("==> Replacing text in "+file.path)
+						  log.debug("==> Replacing text in "+file.path)
 						else
-						  logger.debug("==> Replacing "+srcExp+" in "+file.path)
+						  log.debug("==> Replacing "+srcExp+" in "+file.path)
 					    fileText = fileText.replaceAll(srcExp, replaceText)
 					    file.write(fileText);
 					}
@@ -48,7 +46,7 @@ class Utilities {
 	
 	public static boolean fileChanged(File fi, String newContent) {
 		if (generateMD5(fi.text).compareTo(generateMD5(newContent)) !=0) {
-			logger.info("File changed ${fi.name}")
+			log.info("File changed ${fi.name}")
 			fi.write(newContent,'UTF8')
 			return true
 		}
@@ -75,12 +73,12 @@ class Utilities {
 	}
 	
 	public static def executeOnShell(String command, File workingDir) {
-		logger.debug "Calling '${command}' on directory '${workingDir}'"
+		log.debug "Calling '${command}' on directory '${workingDir}'"
 		def process = new ProcessBuilder(addShellPrefix(command))
 										  .directory(workingDir)
 										  .redirectErrorStream(true)
 										  .start()
-		process.inputStream.eachLine {logger.debug "Return from command: ${it}"}
+		process.inputStream.eachLine {log.debug "Return from command: ${it}"}
 		process.waitFor();
 		return process.exitValue()
 	} 
@@ -90,12 +88,12 @@ class Utilities {
 	public static def executeOnShell(String command, File workingDir, StringBuffer out) {
 		if (SENSIBLEOUTPUT) {
 		  if (command.length()>6)
-		    logger.debug "Calling '${command.substring(0,5)} <truncated>' on directory '${workingDir}'"
+		    log.debug "Calling '${command.substring(0,5)} <truncated>' on directory '${workingDir}'"
 		  else
-		    logger.debug "Calling '${command}' on directory '${workingDir}'"
+		    log.debug "Calling '${command}' on directory '${workingDir}'"
 		}
 		else
-		  logger.debug "Calling '${command}' on directory '${workingDir}'"
+		  log.debug "Calling '${command}' on directory '${workingDir}'"
 		def process = new ProcessBuilder(addShellPrefix(command))
 										  .directory(workingDir)
 										  .redirectErrorStream(true)

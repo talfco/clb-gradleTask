@@ -1,15 +1,14 @@
 package com.cloudburo.utility
 
-import org.apache.log4j.Logger
+import groovy.util.logging.Slf4j
 
 // Handles the encryption of passwords stored in the cloud
+@Slf4j
 class Cryptor   {
 
 	String credentialsPath="src/main/resources/"
 	String sslkey
 	String ssliv
-	
-	static final Logger logger = Logger.getLogger(Cryptor.class)
 	
 	Cryptor () {
 		sslkey = getSSLKey()
@@ -22,7 +21,7 @@ class Cryptor   {
 		def result = Utilities.executeOnShell("openssl des3 -d -K ${sslkey} -iv ${ssliv} -in ${fileName}",new File(credentialsPath),out) 
 		Utilities.SENSIBLEOUTPUT = false
 		if (result != 0)
-		  logger.warn("Decrypt of '${fileName}' failed")
+		  log.warn("Decrypt of '${fileName}' failed")
 		return out.toString()
 	}
 
