@@ -6,9 +6,11 @@ repositories {
     mavenCentral()
 }
 
+// https://github.com/aws/aws-sdk-java/issues/496 -> See upgrade problem
 dependencies {
 	compile gradleApi()
 	compile localGroovy()
+	compile 'com.amazonaws:aws-java-sdk:1.10.11'
 	compile 'org.codehaus.groovy.modules.http-builder:http-builder:0.7.1'
 	compile 'joda-time:joda-time:2.7'
 	compile 'org.slf4j:slf4j-api:1.7.13'
@@ -20,7 +22,7 @@ publishing {
 		maven(MavenPublication) {
 			groupId "com.cloudburo"
 			artifactId 'clb-gradleTask'
-			version '1.0.4'
+			version '1.0.5'
 			from components.java
 		}
 	}

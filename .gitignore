@@ -9,6 +9,7 @@
 *.ear
 
 build/
+log/
 test/
 .gradle/
 
