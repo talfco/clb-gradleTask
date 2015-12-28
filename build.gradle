@@ -18,16 +18,17 @@ dependencies {
 	testCompile 'junit:junit:4.10' 
 }
 
+// TODO: Enable for snapshot or maven deploymen
 publishing {
 	publications {
 		maven(MavenPublication) {
 			groupId "com.cloudburo"
 			artifactId 'clb-gradleTask'
-			version '1.0.5'
+			version '1.1.0-SNAPSHOT'
 			from components.java
 		}
 	}
 	repositories {
-		maven { url "../maven-github-releases"}
+		maven { url "../maven-github-snapshots"}
 	}
 }

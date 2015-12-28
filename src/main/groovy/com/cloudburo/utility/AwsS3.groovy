@@ -33,7 +33,6 @@ class AwsS3 {
 	
 	public static int s3sync (String from, String to) {
 		String cmd = "aws s3 sync "+from+" "+to+" --region "+Cryptor.getAWSRegion()
-		s3://tst.ms.curationplatform.us-west-2/siteconfigs . --dryrun
 		StringBuffer buf = new StringBuffer()
 		return Utilities.executeOnShell(cmd, new File("."),buf)
 	}
@@ -65,6 +64,11 @@ class AwsS3 {
 		AmazonS3Client client = getS3Client()
 		PutObjectRequest req = new PutObjectRequest(bucket,key, file)
 		client.putObject(req)
+	}
+	
+	public static void deleteObject ( String bucket, String key) {
+		AmazonS3Client client = getS3Client()
+		client.deleteObject(bucket, key)
 	}
 	
 }
