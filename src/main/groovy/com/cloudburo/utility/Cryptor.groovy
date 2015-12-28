@@ -69,17 +69,11 @@ class Cryptor   {
 	}
 
 	static String getSSLKey() {
-		def sslkey = System.getenv('SSL_KEY')
-		if (!sslkey) {	sslkey = System.properties['SSL_KEY'] }
-		if (!sslkey) log.warn("No SSL_KEY found in environment")
-		return sslkey
+		return Utilities.getEnvVar('SSL_KEY')
 	}
 	
 	static String getSSLIv() {
-		def ssliv = System.getenv('SSL_IV')
-		if (!ssliv) { ssliv = System.properties['SSL_IV'] }
-		if (!ssliv) log.warn("No SSL_IV found in environment")
-		return ssliv
+		return Utilities.getEnvVar('SSL_IV')
 	}
 	
 	static public AWSCredentials getAWSCredentials() {
@@ -103,10 +97,7 @@ class Cryptor   {
 	}
 	
 	static public String getAWSRegion () {
-		def env = System.getenv('AWS_DEFAULT_REGION')
-		if (!env) {	env = System.properties['AWS_DEFAULT_REGION'] }
-		if (!env) log.warn("No AWS_DEFAULT_REGION found in environment")
-		return env
+		return Utilities.getEnvVar('AWS_DEFAULT_REGION')
 	}
 	
 	static String getAWSRegionUnderscore () {
@@ -118,17 +109,11 @@ class Cryptor   {
 	}
 	
 	static public String getAWSAccessKeyId () {
-		def sslkey = System.getenv('AWS_ACCESS_KEY_ID')
-		if (!sslkey) {	sslkey = System.properties['AWS_ACCESS_KEY_ID'] }
-		if (!sslkey) log.error("No AWS_ACCESS_KEY_ID found in environment")
-		return sslkey
+		return Utilities.getEnvVar('AWS_ACCESS_KEY_ID')
 	}
 	
 	static public String getAWSSecretAccessKey () {
-		def sslkey = System.getenv('AWS_SECRET_ACCESS_KEY')
-		if (!sslkey) {	sslkey = System.properties['AWS_SECRET_ACCESS_KEY'] }
-		if (!sslkey) log.error("No AWS_SECRET_ACCESS_KEY found in environment")
-		return sslkey
+		return Utilities.getEnvVar('AWS_SECRET_ACCESS_KEY')
 	}
 	
 	static public String getAWSEncryptionKey() {
