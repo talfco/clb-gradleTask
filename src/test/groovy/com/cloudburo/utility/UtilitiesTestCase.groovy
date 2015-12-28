@@ -19,38 +19,38 @@ class UtilitiesTestCase {
 		gen = new Cloudflare()
 	}
 
-	//@Test
+	@Test
 	public void testSimple() {
 			StringBuffer inp = new StringBuffer()
-		    def ret = Utilities.executeOnShell("ls", new File("src/test/resources"), inp)
+		    def ret = Utilities.executeOnShell("ls", new File("test/dummy"), inp)
 			println "'${inp}'"
-			assert "test.user" == inp.toString()
+			assert "dummy.txt" == inp.toString()
 			assert ret == 0
 			
 	}
 	
-	//@Test
+	@Test
 	public void testSimple1() {
 			StringBuffer inp = new StringBuffer()
 			Utilities.SENSIBLEOUTPUT = true;
-			def ret = Utilities.executeOnShell("ls", new File("src/test/resources"), inp)
+			def ret = Utilities.executeOnShell("ls", new File("test/dummy"), inp)
 			println "'${inp}'"
-			assert "test.user" == inp.toString()
+			assert "dummy.txt" == inp.toString()
 			assert ret == 0
 			
 	}
 	
-	//@Test
+	@Test
 	public void testSimple2() {
 		StringBuffer inp = new StringBuffer()
 		Utilities.SENSIBLEOUTPUT = true;
-		def ret = Utilities.executeOnShell("ls -lart", new File("src/test/resources"), inp)
+		def ret = Utilities.executeOnShell("ls -lart", new File("test"), inp)
 		println "'${inp}'"
 		assert ret == 0
 			
 	}
 	
-	//@Test
+	@Test
 	public void testCloudflare() {
 		def key = cryp.decrypt('cloudflare.key')
 		def user = cryp.decrypt('cloudflare.user')

@@ -189,4 +189,11 @@ class Utilities {
 		new File(fileName).write("${currentHour}:${count}")
 	}
 	
+	public static String getEnv() {
+		def env = System.getenv('ENV')
+		if (!env) {	env = System.properties['ENV'] }
+		if (!env) log.error("No ENV found in environment")
+		return env
+	}
+	
 }
