@@ -52,8 +52,8 @@ class UtilitiesTestCase {
 	
 	@Test
 	public void testCloudflare() {
-		def key = cryp.decrypt('cloudflare.key')
-		def user = cryp.decrypt('cloudflare.user')
+		def user = Utilities.getEnvVar("CLF_ACCESS_KEY")
+		def key = Utilities.getEnvVar("CLF_SECRET_ACCESS_KEY")
 		// Add an entry
 		def result = gen.configureCloudFlareDomainName(key, user,"curation.space","dognews1","test.test.test")
 		assert(result)

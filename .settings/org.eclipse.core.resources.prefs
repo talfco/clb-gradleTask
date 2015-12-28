@@ -1,3 +1,4 @@
 eclipse.preferences.version=1
 encoding//src/test/groovy/com/cloudburo/utility/AwsS3TestCase.groovy=UTF-8
+encoding//src/test/groovy/com/cloudburo/utility/CryptorTestCase.groovy=UTF-8
 encoding//test/helloWorldTest.txt=UTF-8

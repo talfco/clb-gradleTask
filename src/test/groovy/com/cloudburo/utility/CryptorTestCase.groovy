@@ -9,13 +9,20 @@ import groovy.util.logging.Slf4j
 
 @Slf4j
 class CryptorTestCase {
+	
+	@Before
+	public void setUp() {
+		Utilities.executeOnShell("cp test/helloWorldTest.txt build/.", new File("."))
+	}
 
 	@Test
-	public void testOpenSSLDecrypt() {
+	public void testOpenSSLEncryptDecrypt() {
 		Cryptor crypt = new Cryptor()
-		crypt.credentialsPath = "src/test/resources/"
-		String out = crypt.decrypt("test.user")
-		assert "talfco" == out
+		crypt.credentialsPath = "build"
+		crypt.encrypt("helloWorldTest.txt", "helloWorldTestEnc.txt")
+		
+		String out = crypt.decrypt("helloWorldTestEnc.txt")
+		assert "Hello World Küsnacht" == out
 	}
 
 	@Test

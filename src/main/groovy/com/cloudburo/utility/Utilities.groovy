@@ -196,4 +196,11 @@ class Utilities {
 		return env
 	}
 	
+	public static String getEnvVar(String name) {
+		def env = System.getenv(name)
+		if (!env) {	env = System.properties[name] }
+		if (!env) log.error("No variable "+name+" found in environment")
+		return env
+	}
+	
 }

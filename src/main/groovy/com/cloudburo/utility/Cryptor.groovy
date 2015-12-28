@@ -48,6 +48,16 @@ class Cryptor   {
 		return awsKmsClient
 	} 
 	
+	public String encrypt(String inFileName, String outFileName) {
+		StringBuffer out = new StringBuffer()
+		Utilities.SENSIBLEOUTPUT = true
+		def result = Utilities.executeOnShell("openssl des3 -e -K ${sslkey} -iv ${ssliv} -in ${inFileName} -out ${outFileName} -p",new File(credentialsPath),out)
+		Utilities.SENSIBLEOUTPUT = false
+		if (result != 0)
+		  log.warn("Decrypt of '${infileName}' failed")
+		return out.toString()
+	}
+	
 	public String  decrypt(String fileName)  {
 		StringBuffer out = new StringBuffer()
 		Utilities.SENSIBLEOUTPUT = true
