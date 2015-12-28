@@ -33,6 +33,13 @@ The library will use the following code sequence to retrieve the relevant values
 
 The environment variable handling is implemented in the `com.cloudburo.utility.Cryptor`
 
+### Required System Installations
+
+Part of the library is dependent that on the running system the  
+
+  * [AWS Command Line Interface](http://docs.aws.amazon.com/cli/latest/index.html#) is installed
+  * openssl is installed 
+
 ## Build Instructions (internal)
 
 ##To deploy as Maven Library on Github
