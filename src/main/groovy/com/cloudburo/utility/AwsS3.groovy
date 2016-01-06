@@ -49,7 +49,8 @@ class AwsS3 {
 		AmazonS3Client client = getS3Client()
 		GetObjectRequest req = new GetObjectRequest(bucket,key)
 		S3Object data= client.getObject(req)
-		StringWriter writer = new StringWriter();
+		if (data == null ) return null
+ 		StringWriter writer = new StringWriter();
 		IOUtils.copy(data.getObjectContent(), writer, StandardCharsets.UTF_8.toString());
 		return writer.toString();
 	}
