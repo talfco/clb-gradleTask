@@ -7,6 +7,7 @@ import com.amazonaws.regions.Regions
 import com.amazonaws.regions.Region
 import com.amazonaws.services.s3.AmazonS3Client
 import com.amazonaws.services.s3.model.GetObjectRequest
+import com.amazonaws.services.s3.model.ObjectListing
 import com.amazonaws.services.s3.model.PutObjectRequest
 import com.amazonaws.services.s3.model.S3ObjectInputStream
 import com.amazonaws.services.s3.model.SSEAwsKeyManagementParams
@@ -54,6 +55,20 @@ class AwsS3 {
 		IOUtils.copy(data.getObjectContent(), writer, StandardCharsets.UTF_8.toString());
 		return writer.toString();
 	}
+	
+	public static String getObjectWithExistenceCheck (String bucket, String key ) {
+		AmazonS3Client client = getS3Client()
+		ObjectListing list = client.listObjects(bucket, key)
+		if (list.objectSummaries.size() == 0) return ""
+		GetObjectRequest req = new GetObjectRequest(bucket,key)
+		S3Object data= client.getObject(req)
+		if (data == null ) return null
+		 StringWriter writer = new StringWriter();
+		IOUtils.copy(data.getObjectContent(), writer, StandardCharsets.UTF_8.toString());
+		return writer.toString();
+	}
+	
+	
 	
 	public static String putEncryptedObject (String bucket, String key, File file) {
 		AmazonS3Client client = getS3Client()

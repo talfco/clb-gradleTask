@@ -36,6 +36,17 @@ class AwsS3TestCase {
 	}
 	
 	@Test
+	public void testGetWithExistenceCheck() {
+		String  output = AwsS3.getObjectWithExistenceCheck("tst.ms.curationplatform.us-west-2", "gugus/gugus")
+		assert output.equals("")
+		output = AwsS3.getObjectWithExistenceCheck("tst.ms.curationplatform.us-west-2", "testenc/HelloWorld.txt")
+		log.debug("Encryption Output: "+output)
+		assert output.trim().equals("Hello World")
+	}
+	
+	
+	
+	@Test
 	public void testPutGetDelete() {
 		AwsS3.putObject("tst.ms.curationplatform.us-west-2", "test/putHelloWorld.txt", new File("test/helloWorldTest.txt"))
 		String output = AwsS3.getObject("tst.ms.curationplatform.us-west-2", "test/putHelloWorld.txt")
