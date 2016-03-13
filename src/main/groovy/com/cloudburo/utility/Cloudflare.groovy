@@ -47,14 +47,12 @@ class Cloudflare {
 		  String curlAction = generateCurl("POST","/zones/${zoneObj.id}/dns_records",user,key)
 		  String cnt = '{"type":"'+type+'","name":"'+dnsName+'","content":"'+content+'", "ttl": "1", "proxied": true}'
 		  curlAction += " --data '${cnt}'"
-		  log.info(curlAction)
 		  return doApiCallSingleEntryReturn(curlAction, "createUpdateDNSEntry","${dnsName}-${content}",false)
 		} else {
 			log.debug("CloudflareAPI-createDNSEntry: udating entry ${dnsName}")
 			String curlAction = generateCurl("PUT","/zones/${zoneObj.id}/dns_records/${dnsObj.id}",user,key)
 			String cnt = '{"type":"'+type+'","name":"'+dnsName+'","content":"'+content+'", "ttl": "1", "proxied": true}'
 			curlAction += " --data '${cnt}'"
-			log.info(curlAction)
 			return doApiCallSingleEntryReturn(curlAction, "createUpdateDNSEntry","${dnsName}-${content}",false)
 		}
 	}
