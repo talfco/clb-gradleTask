@@ -62,4 +62,10 @@ Change to the project directory.
 	git push
 	
 Change in the gradle build file in case you deploy to release instead of snapshot (TODO)
+
+
+  
+  
+
+
 	

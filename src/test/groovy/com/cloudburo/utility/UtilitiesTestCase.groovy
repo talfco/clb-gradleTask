@@ -51,24 +51,31 @@ class UtilitiesTestCase {
 	}
 	
 	@Test
-	public void testCloudflare() {
+	public void testCloudflare1() {
 		def user = Utilities.getEnvVar("CLF_ACCESS_KEY")
 		def key = Utilities.getEnvVar("CLF_SECRET_ACCESS_KEY")
-		// Add an entry
-		def result = gen.configureCloudFlareDomainName(key, user,"curation.space","dognews1","test.test.test")
-		assert(result)
-		// Existing entry
-		result = gen.configureCloudFlareDomainName(key, user,"curation.space","dognews1","test.test.test")
-		assert(result)
-		// Modify an entry
-		result = gen.configureCloudFlareDomainName(key, user,"curation.space","dognews1","test1.test1.test1")
-		assert(result)
-		// Delete Entry
-		result = gen.deleteCloudFlareDomainName(key, user,"curation.space","dognews1")
-		assert(result)
-		// Failure
-		result = gen.configureCloudFlareDomainName(key, user,"curation.space1","dognews1","test1.test1.test1")
-		assert(!result)
+		// Zone
+		def result = gen.getZone(user, key,"curation.space")
+		assert(result != null)
+		assert(result.name == "curation.space")
+		result = gen.getZone(user, key,"curation.spacegugus")
+		assert(result == null)
+		// DNS Entry
+		result = gen.getDNSEntry(user, key, "curation.space", "CNAME", "dognews.curation.space")
+		assert(result != null)
+		assert(result.name == "dognews.curation.space")
+		//System.out.println ( result)
+		result = gen.getDNSEntry(user, key, "curation.space", "CNAME", "dognewsgugus.curation.space")
+		assert(result == null)
+		result = gen.createUpdateDNSEntry(user,key, "curation.space", "CNAME", "dognewsgugus.curation.space","acloudburo.github.io")
+		assert(result != null)
+		assert(result.name == "dognewsgugus.curation.space")
+		result = gen.createUpdateDNSEntry(user,key, "curation.space", "CNAME", "dognewsgugus.curation.space","acloudburo1.github.io")
+		assert(result != null)
+		assert(result.content == "acloudburo1.github.io")
+		result = gen.deleteDNSEntry(user, key, "curation.space", "dognewsgugus.curation.space")
+		assert(result != null)
+		assert(result.id)	
 	}
 	
 	@Test 

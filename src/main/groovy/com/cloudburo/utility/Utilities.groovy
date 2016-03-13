@@ -72,6 +72,10 @@ class Utilities {
 		return executeOnShell(command, new File(System.properties.'user.dir'),out)
 	}
 	
+	public static def executeOnShellWithoutErrorRedirect(String command, StringBuffer out) {
+		return executeOnShellWithoutErrorRedirect(command, new File(System.properties.'user.dir'),out)
+	}
+	
 	public static def executeOnShell(String command, File workingDir) {
 		log.debug "Calling '${command}' on directory '${workingDir}'"
 		def process = new ProcessBuilder(addShellPrefix(command))
@@ -103,6 +107,30 @@ class Utilities {
 			if (notFirst) { out.append('\n') }
 			notFirst = true
 			out.append(it); 
+		}
+		process.waitFor();
+		return process.exitValue()
+	}
+	
+	// TODO: Clean up
+	public static def executeOnShellWithoutErrorRedirect(String command, File workingDir, StringBuffer out) {
+		if (SENSIBLEOUTPUT) {
+		  if (command.length()>6)
+			log.debug "Calling '${command.substring(0,5)} <truncated>' on directory '${workingDir}'"
+		  else
+			log.debug "Calling '${command}' on directory '${workingDir}'"
+		}
+		else
+		  log.debug "Calling '${command}' on directory '${workingDir}'"
+		def process = new ProcessBuilder(addShellPrefix(command))
+										  .directory(workingDir)
+										  .redirectErrorStream(false)
+										  .start()
+		boolean notFirst = false;
+		process.inputStream.eachLine {
+			if (notFirst) { out.append('\n') }
+			notFirst = true
+			out.append(it);
 		}
 		process.waitFor();
 		return process.exitValue()
