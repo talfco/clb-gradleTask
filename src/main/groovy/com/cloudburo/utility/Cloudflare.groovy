@@ -3,7 +3,6 @@ package com.cloudburo.utility
 import groovy.util.logging.Slf4j
 import groovy.json.JsonBuilder;
 import groovy.json.JsonSlurper
-import static groovyx.net.http.ContentType.URLENC
 
 @Slf4j
 class Cloudflare {
