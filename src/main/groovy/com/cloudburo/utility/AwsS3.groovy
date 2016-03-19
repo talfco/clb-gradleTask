@@ -68,7 +68,15 @@ class AwsS3 {
 		return writer.toString();
 	}
 	
-	
+	public static List<String> getFileNames(String bucket, key) {
+		AmazonS3Client client = getS3Client()
+		ObjectListing list = client.listObjects(bucket, key)
+		Vector<String> vec = new Vector<String>()
+ 		list.objectSummaries.each {
+			vec.add(it.key)
+		}
+		return vec
+	}
 	
 	public static String putEncryptedObject (String bucket, String key, File file) {
 		AmazonS3Client client = getS3Client()
