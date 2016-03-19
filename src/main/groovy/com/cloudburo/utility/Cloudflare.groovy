@@ -83,7 +83,7 @@ class Cloudflare {
 	}
 	
 	public boolean configureCloudFlareDomainName(String key, String user,String domainName,String subDomain, String cnameTarget) {
-		createUpdateDNSEntry(user,key,domainName,"CNAME",domainName+"."+subDomain, cnameTarget)
+		createUpdateDNSEntry(user,key,domainName,"CNAME",subDomain+"."+domainName, cnameTarget)
 	}
 	
 
