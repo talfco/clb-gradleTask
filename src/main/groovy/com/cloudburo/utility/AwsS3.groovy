@@ -33,13 +33,13 @@ class AwsS3 {
 	} 
 	
 	public static int s3sync (String from, String to) {
-		String cmd = "aws s3 sync "+from+" "+to+" --region "+Cryptor.getAWSRegion()+" --exact-timestamps"
+		String cmd = "aws s3 sync "+from+" "+to+" --region "+Cryptor.getAWSRegion()+" --exact-timestamps --delete"
 		StringBuffer buf = new StringBuffer()
 		return Utilities.executeOnShell(cmd, new File("."),buf)
 	}
 	
 	public static boolean syncNecessary(String from, String to) {
-		String cmd = "aws s3 sync "+from+" "+to+" --region "+Cryptor.getAWSRegion()+" --dryrun --exact-timestamps"
+		String cmd = "aws s3 sync "+from+" "+to+" --region "+Cryptor.getAWSRegion()+" --dryrun --exact-timestamps --delete"
 		StringBuffer buf = new StringBuffer()
 		Utilities.executeOnShell(cmd, new File("."),buf)
 		log.debug("Output: "+buf.toString())
