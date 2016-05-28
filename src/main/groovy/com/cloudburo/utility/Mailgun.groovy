@@ -7,7 +7,7 @@ import groovy.json.JsonSlurper
 @Slf4j
 class Mailgun {
 	
-	public Cloudflare() {}
+	public Mailgun() {}
 	
 	public String sendEmail(String key,String mgdomain,String from,String to,String subject,String text) {
 		String curlAction =  "curl -s --user 'api:${key}'  https://api.mailgun.net/v3/${mgdomain}/messages "
