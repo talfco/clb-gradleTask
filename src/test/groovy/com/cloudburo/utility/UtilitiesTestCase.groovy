@@ -11,15 +11,17 @@ class UtilitiesTestCase {
 	
 	Cryptor cryp
 	Cloudflare gen
+	Mailgun gun
 	
 	@Before
 	public void setUp() {
 		cryp = new Cryptor();
 		cryp.credentialsPath = "test"
 		gen = new Cloudflare()
+		gun = new Mailgun()
 	}
 
-	@Test
+	//@Test
 	public void testSimple() {
 			StringBuffer inp = new StringBuffer()
 		    def ret = Utilities.executeOnShell("ls", new File("test/dummy"), inp)
@@ -29,7 +31,7 @@ class UtilitiesTestCase {
 			
 	}
 	
-	@Test
+	//@Test
 	public void testSimple1() {
 			StringBuffer inp = new StringBuffer()
 			Utilities.SENSIBLEOUTPUT = true;
@@ -40,7 +42,7 @@ class UtilitiesTestCase {
 			
 	}
 	
-	@Test
+	//@Test
 	public void testSimple2() {
 		StringBuffer inp = new StringBuffer()
 		Utilities.SENSIBLEOUTPUT = true;
@@ -50,7 +52,7 @@ class UtilitiesTestCase {
 			
 	}
 	
-	@Test
+	//@Test
 	public void testCloudflare1() {
 		def user = Utilities.getEnvVar("CLF_ACCESS_KEY")
 		def key = Utilities.getEnvVar("CLF_SECRET_ACCESS_KEY")
@@ -78,7 +80,7 @@ class UtilitiesTestCase {
 		assert(result.id)	
 	}
 	
-	@Test 
+	//@Test 
 	public void testTimeHandling() {
 		int hour = Utilities.getCurrentHour("Europe/Zurich")
 		System.out.println("Actual hour ${hour}")
@@ -89,6 +91,13 @@ class UtilitiesTestCase {
 		
 		System.out.println("Got ${i}")
 		//Utilities.decreaseProcessEntryInHour("build", "newsq", "blogtest")
+	}
+	
+	@Test
+	public void testMailgun() {
+		def key  = Utilities.getEnvVar("MG_KEY") 
+		def domain  = Utilities.getEnvVar("MG_DOMAIN")
+		gun.sendEmail(key, domain, "Cloudburo Publishing Bot <support@cloudbro.net>", "felix@cloudburo.net", "Your Site is live", "Hi there, \nwe created your site which is ready to be served with fresh content from Evernote.")
 	}
 	
 	
