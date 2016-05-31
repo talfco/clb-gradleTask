@@ -20,10 +20,10 @@ class Mailgun {
 
 	
 	private boolean doApiCallSingleEntryReturn(curlAction) {
-		//Utilities.SENSIBLEOUTPUT = true;
+		Utilities.SENSIBLEOUTPUT = true;
 		StringBuffer out = new StringBuffer()
 		def ret = Utilities.executeOnShellWithoutErrorRedirect(curlAction, out)
-		// Utilities.SENSIBLEOUTPUT = false;
+		Utilities.SENSIBLEOUTPUT = false;
 		if (ret == 0) {
 			def siteObj = new JsonSlurper().parseText(out.toString())
 			log.debug("MailgunAPI: 'Queued Email ${siteObj.id}' ")
