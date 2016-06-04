@@ -12,6 +12,7 @@ class UtilitiesTestCase {
 	Cryptor cryp
 	Cloudflare gen
 	Mailgun gun
+	Slack slack
 	
 	@Before
 	public void setUp() {
@@ -19,6 +20,7 @@ class UtilitiesTestCase {
 		cryp.credentialsPath = "test"
 		gen = new Cloudflare()
 		gun = new Mailgun()
+		slack = new Slack()
 	}
 
 	//@Test
@@ -93,13 +95,17 @@ class UtilitiesTestCase {
 		//Utilities.decreaseProcessEntryInHour("build", "newsq", "blogtest")
 	}
 	
-	@Test
+	//@Test
 	public void testMailgun() {
 		def key  = Utilities.getEnvVar("MG_KEY") 
 		def domain  = Utilities.getEnvVar("MG_DOMAIN")
 		gun.sendEmail(key, domain, "Cloudburo Publishing Bot <support@cloudbro.net>", "felix@cloudburo.net", "Your Site is live", "Hi there, \nwe created your site which is ready to be served with fresh content from Evernote.")
 	}
 	
-	
+	@Test
+	public void testSlack() {
+		def key  = Utilities.getEnvVar("SLACK_URL")
+		slack.sendSlackMessage(key,  "This is a test <https://publishingbot.cloudburo.net>", "production", "", "", "")
+	}
 	
 }
