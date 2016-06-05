@@ -35,9 +35,9 @@ class Slack {
 		
 	private boolean doApiCallSingleEntryReturn(curlAction) {
 		StringBuffer out = new StringBuffer()
-		Utilities.SENSIBLEOUTPUT = true;
+		//Utilities.SENSIBLEOUTPUT = true;
 		def ret = Utilities.executeOnShellWithoutErrorRedirect(curlAction, out)
-		Utilities.SENSIBLEOUTPUT = false;
+		//Utilities.SENSIBLEOUTPUT = false;
 		if (ret == 0) {
 			return true
 		} else{ 
