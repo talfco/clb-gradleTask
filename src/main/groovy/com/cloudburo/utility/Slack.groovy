@@ -1,5 +1,9 @@
 package com.cloudburo.utility
 
+import groovy.util.logging.Slf4j;
+
+
+@Slf4j
 class Slack {
 
 	public Slack() {}
