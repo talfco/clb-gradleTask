@@ -116,6 +116,10 @@ class Cryptor   {
 		return Utilities.getEnvVar('AWS_SECRET_ACCESS_KEY')
 	}
 	
+	static public String getAWSAccountId() {
+		return Utilities.getEnvVar('AWS_ACCOUNT_ID')
+	}
+	
 	static public String getAWSEncryptionKey() {
 		String env = Utilities.getEnv()
 		String envId

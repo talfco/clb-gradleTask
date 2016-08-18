@@ -18,7 +18,7 @@ class AwsS3TestCase {
 		Utilities.executeOnShell("mkdir build/tst",new File("."))
 	}
 	
-	@Test
+	//@Test
 	public void testSync() {
 		def bool = AwsS3.syncNecessary("s3://tst.ms.curationplatform.us-west-2/test", "build/tst")
 		assert bool == true
@@ -28,14 +28,14 @@ class AwsS3TestCase {
 		assert bool == false
 	}
 	
-	@Test
+	//@Test
 	public void testGetEncrypted() {
 		String output = AwsS3.getObject("tst.ms.curationplatform.us-west-2", "testenc/HelloWorld.txt")
 		log.debug("Encryption Output: "+output)
 		assert output.trim().equals("Hello World")
 	}
 	
-	@Test
+	//@Test
 	public void testGetWithExistenceCheck() {
 		String  output = AwsS3.getObjectWithExistenceCheck("tst.ms.curationplatform.us-west-2", "gugus/gugus")
 		assert output.equals("")
@@ -46,7 +46,7 @@ class AwsS3TestCase {
 	
 	
 	
-	@Test
+	//@Test
 	public void testPutGetDelete() {
 		AwsS3.putObject("tst.ms.curationplatform.us-west-2", "test/putHelloWorld.txt", new File("test/helloWorldTest.txt"))
 		String output = AwsS3.getObject("tst.ms.curationplatform.us-west-2", "test/putHelloWorld.txt")
@@ -54,7 +54,7 @@ class AwsS3TestCase {
 		AwsS3.deleteObject("tst.ms.curationplatform.us-west-2", "test/putHelloWorld.txt")
 	}
 	
-	@Test
+	//@Test
 	public void testPutGetDeleteEncrypted() {
 		AwsS3.putEncryptedObject("tst.ms.curationplatform.us-west-2", "testenc/putEncHelloWorld.txt", new File("test/helloWorldTest.txt"))
 		String output = AwsS3.getObject("tst.ms.curationplatform.us-west-2", "testenc/putEncHelloWorld.txt")
