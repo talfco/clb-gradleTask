@@ -43,8 +43,9 @@ class AwsSQS {
 	public static String receiveMessage(String queueName, String queueOwnerAWSAccountId) {
 		ReceiveMessageRequest req = new ReceiveMessageRequest()
 		req.setMaxNumberOfMessages(1)
-		log.debug ("Got QueueURL: "+ getQueueURL(queueName,queueOwnerAWSAccountId) )
-		req.setQueueUrl(getQueueURL(queueName,queueOwnerAWSAccountId))
+		String queueURL = getQueueURL(queueName,queueOwnerAWSAccountId)
+		log.debug ("Got QueueURL: "+ queueURL  )
+		req.setQueueUrl(queueURL)
 		ReceiveMessageResult res = getSQSClient().receiveMessage(req)
 		List<Message> msgList = res.getMessages()
 		if (msgList.empty) {
@@ -53,7 +54,9 @@ class AwsSQS {
 		}
 		else {
 		    log.debug("Got SQS Message: "+ msgList.get(0).body)
-			return msgList.get(0).body
+			Message msg = msgList.get(0)
+			getSQSClient().deleteMessage(queueURL,msg.receiptHandle)
+			return msg.body
 		}
 	}
 	
