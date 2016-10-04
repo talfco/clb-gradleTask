@@ -18,8 +18,8 @@ class AwsSQSTestCase {
 	
 	@Test
 	public void testGetMessage() {
-		String output = AwsSQS.receiveMessage("tst_ms_publishingbot_us-west-2", Cryptor.getAWSAccountId())
-		
+		AwsSQS.sendMessage("tst_ms_publishingbot_us-west-2", "Hello World", Cryptor.getAWSAccountId())
+		String output = AwsSQS.receiveMessage("tst_ms_publishingbot_us-west-2", Cryptor.getAWSAccountId())	
 		assert output.trim().equals("Hello World")
 	}
 	

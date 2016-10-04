@@ -1,6 +1,8 @@
 package com.cloudburo.utility
 
-import com.amazonaws.regions.Regions
+import com.amazonaws.services.sqs.model.SendMessageRequest;
+import com.amazonaws.services.sqs.model.SendMessageResult;
+import com.amazonaws.regions.Regions;
 import com.amazonaws.regions.Region
 import com.amazonaws.services.sqs.AmazonSQSClient
 import com.amazonaws.services.sqs.model.GetQueueUrlResult
@@ -58,6 +60,14 @@ class AwsSQS {
 			getSQSClient().deleteMessage(queueURL,msg.receiptHandle)
 			return msg.body
 		}
+	}
+	
+	public static void sendMessage(String queueName, String message, String queueOwnerAWSAccountId) {
+		log.debug("Send SQS Message: "+message)
+		SendMessageRequest sendMessageRequest = new SendMessageRequest()
+		sendMessageRequest.queueUrl = getQueueURL(queueName,queueOwnerAWSAccountId)
+		sendMessageRequest.messageBody = message
+		SendMessageResult res = getSQSClient().sendMessage( sendMessageRequest)
 	}
 	
 }
