@@ -1,10 +1,20 @@
 apply plugin: 'groovy'
 apply plugin: 'maven-publish'
+apply from: '../gradle-shared/deploy.gradle'
 
 
 repositories {
     mavenCentral()
 }
+
+version = "1.2.15-SNAPSHOT"
+group = "com.cloudburo"
+
+configurations.all {
+	// check for updates every build
+	resolutionStrategy.cacheChangingModulesFor 0, 'seconds'
+}
+
 
 // https://github.com/aws/aws-sdk-java/issues/496 -> See upgrade problem
 dependencies {
@@ -18,17 +28,20 @@ dependencies {
 	testCompile 'junit:junit:4.10' 
 }
 
-// TODO: Enable for snapshot or maven deploymen
 publishing {
 	publications {
 		maven(MavenPublication) {
-			groupId "com.cloudburo"
-			artifactId 'clb-gradleTask'
-			version '1.1.14'
+			groupId project.group
+			artifactId 'clb-gradle-task'
+			version project.version
 			from components.java
 		}
 	}
 	repositories {
-		maven { url "../maven-github-releases"}
+		maven {
+			url "../publish/maven-github-${project.version.endsWith('-SNAPSHOT') ? 'snapshots' : 'releases' }"
+		}
 	}
 }
+
+defaultTasks 'clean'
